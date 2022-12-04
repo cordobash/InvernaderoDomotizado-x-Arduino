@@ -21,6 +21,8 @@ byte salida = 10; //Probar con 25
  
 
 void setup() {
+pinMode(7, OUTPUT);
+pinMode(6,OUTPUT);
 pinMode(sensor, INPUT);
 Serial.begin(9600);
 dht.begin();
@@ -58,6 +60,9 @@ void loop() {
                     Serial.print("Light Intensity:");
 Serial.print(int(Light(analogRead(2)))); //pin A0
 Serial.println(" Lux");
+if (int(Light(analogRead(2))) <= 50) {
+  digitalWrite(7,HIGH);
+}
                     // Leemos la humedad relativa
   float h = dht.readHumidity();
   // Leemos la temperatura en grados centígrados (por defecto)
@@ -99,6 +104,9 @@ Serial.println(" Lux");
                     Serial.print("Humedad de suelo: ");//SENSOR DE HUMEDAD DE SUELO
                     Serial.print(valorHumedad);
                     Serial.println("%"); 
+                    if (valorHumedad <= 50) {
+                      digitalWrite(6,HIGH);
+                    }
                     Serial.println("Water level Sensor Value: "); //SENSOR DE NIVEL DE AGUA
                     Serial.println(analogRead(A1)); //Se lee el valor de A1 para el sensor de nivel de agua
                     if(analogRead(A1) <= 50) { //Comparacion de si el nivel del agua es igual o menor a 50 se activara el buzzer como alerta de sonido
